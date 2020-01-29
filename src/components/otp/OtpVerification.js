@@ -51,17 +51,20 @@ const OtpVerification = function(props) {
   const autoSubmitOtpTimerIntervalCallbackReference = useRef();
 
   useEffect(() => {
-    startResendOtpTimer();
-
-    // autoSubmitOtpTime value will be set after otp is detected, in that case we have to start auto submit timer
+    // autoSubmitOtpTime value will be set after otp is detected,
+    // in that case we have to start auto submit timer
     autoSubmitOtpTimerIntervalCallbackReference.current = autoSubmitOtpTimerIntervalCallback;
+  });
+
+  useEffect(() => {
+    startResendOtpTimer();
 
     return () => {
       if (resendOtpTimerInterval) {
         clearInterval(resendOtpTimerInterval);
       }
     };
-  });
+  }, [resendButtonDisabledTime]);
 
   useEffect(() => {
     // docs: https://github.com/faizalshap/react-native-otp-verify
@@ -190,7 +193,8 @@ const OtpVerification = function(props) {
   };
 
   // only backspace key press event is fired on Android
-  // to have consistency, using this event just to detect backspace key press and onOtpChange for other digits press
+  // to have consistency, using this event just to detect backspace key press and
+  // onOtpChange for other digits press
   const onOtpKeyPress = index => {
     return ({nativeEvent: {key: value}}) => {
       // auto focus to previous InputText if value is blank and existing value is also blank
@@ -204,7 +208,8 @@ const OtpVerification = function(props) {
         }
 
         /**
-         * clear the focused text box as well only on Android because on mweb onOtpChange will be also called  doing this thing for us
+         * clear the focused text box as well only on Android because on mweb onOtpChange will be also called
+         * doing this thing for us
          * todo check this behaviour on ios
          */
         if (isAndroid && index > 0) {
