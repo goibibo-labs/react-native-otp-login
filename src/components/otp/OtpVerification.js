@@ -231,47 +231,25 @@ const OtpVerification = function(props) {
             {otpRequestData.email_id ? 'email' : 'mobile number'}{' '}
           </CustomText>
           <View style={[GenericStyles.row, GenericStyles.mt12]}>
-            <CustomTextInput
-              containerStyle={[GenericStyles.fill, GenericStyles.mr12]}
-              value={otpArray[0]}
-              onKeyPress={onOtpKeyPress(0)}
-              onChangeText={onOtpChange(0)}
-              keyboardType={'numeric'}
-              maxLength={1}
-              style={[styles.otpText, GenericStyles.centerAlignedText]}
-              autoFocus
-              refCallback={refCallback(firstTextInputRef)}
-            />
-            <CustomTextInput
-              containerStyle={[GenericStyles.fill, GenericStyles.mr12]}
-              value={otpArray[1]}
-              onKeyPress={onOtpKeyPress(1)}
-              onChangeText={onOtpChange(1)}
-              keyboardType={'numeric'}
-              maxLength={1}
-              style={[styles.otpText, GenericStyles.centerAlignedText]}
-              refCallback={refCallback(secondTextInputRef)}
-            />
-            <CustomTextInput
-              containerStyle={[GenericStyles.fill, GenericStyles.mr12]}
-              value={otpArray[2]}
-              onKeyPress={onOtpKeyPress(2)}
-              onChangeText={onOtpChange(2)}
-              keyboardType={'numeric'}
-              maxLength={1}
-              style={[styles.otpText, GenericStyles.centerAlignedText]}
-              refCallback={refCallback(thirdTextInputRef)}
-            />
-            <CustomTextInput
-              containerStyle={GenericStyles.fill}
-              value={otpArray[3]}
-              onKeyPress={onOtpKeyPress(3)}
-              onChangeText={onOtpChange(3)}
-              keyboardType={'numeric'}
-              maxLength={1}
-              style={[styles.otpText, GenericStyles.centerAlignedText]}
-              refCallback={refCallback(fourthTextInputRef)}
-            />
+            {[
+              firstTextInputRef,
+              secondTextInputRef,
+              thirdTextInputRef,
+              fourthTextInputRef,
+            ].map((textInputRef, index) => (
+              <CustomTextInput
+                containerStyle={[GenericStyles.fill, GenericStyles.mr12]}
+                value={otpArray[index]}
+                onKeyPress={onOtpKeyPress(index)}
+                onChangeText={onOtpChange(index)}
+                keyboardType={'numeric'}
+                maxLength={1}
+                style={[styles.otpText, GenericStyles.centerAlignedText]}
+                autoFocus={index === 0 ? true : undefined}
+                refCallback={refCallback(textInputRef)}
+                key={index}
+              />
+            ))}
           </View>
           {errorMessage ? (
             <CustomText
